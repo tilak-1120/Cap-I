@@ -1,0 +1,10 @@
+.captionDiv{
+    background-color: rgb(220, 215, 215);
+    color: black;
+    min-height: 100px;
+    max-height: fit-content;
+}
+
+.uploadedImg{
+    width: 50%;
+}
