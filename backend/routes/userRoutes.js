@@ -7,6 +7,7 @@ const {
   userCheck,
   uploadImage,
   getUserDetails,
+  getAllUsers,
 } = require("../controllers/userController");
 
 const upload = require("multer")({ dest: "uploads/" });
@@ -32,5 +33,8 @@ router.post("/upload", type, uploadImage);
 
 // Get User
 router.get("/getuser/:username", getUserDetails);
+
+// Get All Users
+router.get("/getallusers", getAllUsers);
 
 module.exports = router;

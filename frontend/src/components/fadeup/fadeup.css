@@ -1,0 +1,13 @@
+.fade-up-appear,
+.fade-up-enter {
+  opacity: 0;
+  transform: translateY(10px);
+  z-index: 1;
+}
+
+.fade-up-appear-active,
+.fade-up-enter-active {
+  opacity: 1;
+  transform: translateY(0px);
+  transition: opacity 2000ms, transform 1500ms;
+}

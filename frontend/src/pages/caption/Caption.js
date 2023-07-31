@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "./caption.css";
+// import { format } from "timeago.js";
 
 function Caption() {
   const { usm } = useContext(userContext);
@@ -12,6 +13,7 @@ function Caption() {
   const [isGenerated, setIsGenerated] = useState(false);
   const [images, setImages] = useState();
   const [recentImages, setRecentImages] = useState([]);
+  const [lastSeen, setLastSeen] = useState();
 
   const uploadImage = async () => {
     try {
@@ -54,6 +56,7 @@ function Caption() {
         });
         console.log(lastImages);
         setRecentImages(lastImages);
+        setLastSeen(getUser.data.updatedAt);
       }
     } catch (err) {
       console.log(err);
@@ -81,7 +84,7 @@ function Caption() {
   useEffect(() => {
     getImages();
     console.log(images);
-  }, [isGenerated, images, recentImages]);
+  }, [isGenerated]);
 
   return (
     <>
@@ -160,26 +163,28 @@ function Caption() {
                 </h4>
                 <h1 className="display-5 mb-4">
                   Last Few Images <br />
-                  That You Shared With Us!!
+                  That You Recently Shared With Us!!
                 </h1>
 
                 <div
-                  className="col-lg-12 wow fadeInUp d-flex flex-column"
+                  className="col-lg-12 wow fadeInUp d-flex flex-column-reverse"
                   data-wow-delay="0.1s"
                 >
-                  {recentImages.map((key) => {
-                    return (
-                      <>
-                        <div className="d-flex justify-content-center align-items-center w-100">
-                          <img
-                            src={key}
-                            alt="Uploaded image"
-                            className="uploadedImg m-5 mx-auto"
-                          />
-                        </div>
-                      </>
-                    );
-                  })}
+                  {recentImages.length >= 1
+                    ? recentImages.map((key) => {
+                        return (
+                          <>
+                            <div className="d-flex justify-content-center align-items-center w-100">
+                              <img
+                                src={key}
+                                alt="Uploaded image"
+                                className="uploadedImg m-5 mx-auto"
+                              />
+                            </div>
+                          </>
+                        );
+                      })
+                    : ""}
                 </div>
               </>
             ) : (

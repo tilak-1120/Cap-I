@@ -18,24 +18,29 @@ exports.registerUser = async (req, res) => {
 
     const myexp = /^[a-zA-Z]+[0-9]+@[a-z]+(?:\.[a-z]+)*$/;
 
-    const testing = myexp.test(email);
-    console.log(testing);
+    const normalexp = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.com$/;
+    const extexp = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+(\.co\.in|\.ac\.in)$/;
 
-    if (!testing) {
+    const testing = normalexp.test(email);
+    const testing1 = extexp.test(email);
+    // console.log(testing);
+    // console.log(testing1);
+
+    if (!testing && !testing1) {
       return res.status(400).json("Invalid email");
+    } else {
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(req.body.password, salt);
+
+      const newUser = new User({
+        username: req.body.username,
+        email: req.body.email,
+        password: hashedPassword,
+      });
+
+      const user = await newUser.save();
+      res.status(200).json("User Registered");
     }
-
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(req.body.password, salt);
-
-    const newUser = new User({
-      username: req.body.username,
-      email: req.body.email,
-      password: hashedPassword,
-    });
-
-    const user = await newUser.save();
-    res.status(200).json("User Registered");
   } catch (err) {
     res.status(500).json(err);
   }
@@ -49,8 +54,17 @@ exports.updateUserPassword = async (req, res) => {
       return res.status(404).json("User not found");
     }
 
+    const comparePassword = await bcrypt.compare(
+      req.body.password,
+      findUser.password
+    );
+
+    if (!comparePassword) {
+      return res.status(403).json("Password doesn't match");
+    }
+
     const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    const hashedPassword = await bcrypt.hash(req.body.newpassword, salt);
 
     updateUser = await User.updateOne(
       { username: req.params.username },
@@ -152,5 +166,14 @@ exports.getUserDetails = async (req, res) => {
     }
   } catch (err) {
     res.status(404).json("User not found");
+  }
+};
+
+exports.getAllUsers = async (req, res) => {
+  try {
+    const getUsers = await User.find();
+    res.status(200).json(getUsers.length);
+  } catch (err) {
+    res.status(500).json("Database is empty");
   }
 };

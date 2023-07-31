@@ -1,8 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./about.css";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 function About() {
+  const [users, setUsers] = useState();
+
+  const getAllUsers = async () => {
+    try {
+      const getUsers = await axios.get("/api/v1/getallusers");
+      setUsers(getUsers.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getAllUsers();
+  }, []);
+
   return (
     <>
       {/* Page Header Start  */}
@@ -69,7 +85,7 @@ function About() {
                   style={{ width: "120px", height: "120px" }}
                 >
                   <h1 className="display-1 mb-n2" data-toggle="counter-up">
-                    30
+                    {users}
                   </h1>
                   <h1>+</h1>
                 </div>

@@ -32,9 +32,12 @@ function Signup() {
         email: email.current.value,
         password: password.current.value,
       });
-      alert("Signed Up Succesfully");
-      navigate("/");
-      console.log(registerUser);
+
+      if (registerUser) {
+        alert("Signed Up Succesfully");
+        navigate("/signin");
+        console.log(registerUser);
+      }
     } catch (err) {
       alert("Please enter valid email address or try a new one");
       console.log(err);
@@ -56,7 +59,7 @@ function Signup() {
     if (usm !== "") {
       navigate("/");
     }
-  }, [usm, setUsm, navigate]);
+  }, [usm, setUsm, navigate, registerUser]);
 
   return (
     <>

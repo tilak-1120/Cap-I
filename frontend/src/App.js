@@ -1,8 +1,5 @@
 import "bootstrap/dist/css/bootstrap.css";
 import "./bootstrap.scss";
-// import "./lib/animate/animate.min.css";
-// import "./lib/owlcarousel/assets/owl.carousel.min.css";
-// import "./lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css";
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navbar from "./components/navbar/Navbar";
@@ -14,6 +11,16 @@ import Signup from "./pages/signup/Signup";
 import Caption from "./pages/caption/Caption";
 import Footer from "./components/footer/Footer";
 import { createContext, useState } from "react";
+
+// import "./lib/wow/wow.min.js";
+// import "./lib/easing/easing.min.js";
+// import "./lib/waypoints/waypoints.min.js";
+// import "./lib/counterup/counterup.min.js";
+// import "./lib/owlcarousel/owl.carousel.min.js";
+// import "./lib/tempusdominus/js/moment.min.js";
+// import "./lib/tempusdominus/js/moment-timezone.min.js";
+// import "./lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js";
+// import "./lib/main.js";
 
 export const userContext = createContext();
 

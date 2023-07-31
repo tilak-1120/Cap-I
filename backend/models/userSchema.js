@@ -28,7 +28,7 @@ const UserSchema = new mongoose.Schema(
     },
     captionedImages: {
       type: Array,
-      default: ["../uploads/default.jpg"],
+      default: [],
     },
   },
   { timestamps: true }
