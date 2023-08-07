@@ -87,7 +87,8 @@ function Signin() {
       {/* Page Header Start  */}
       <div
         className="container-fluid page-header py-5 mb-5 wow fadeIn"
-        data-wow-delay="0.1s"
+        data-aos="fade-down"
+        data-aos-delay="500"
       >
         <div className="container py-5">
           <h1 className="display-1 text-white animated slideInDown">Sign In</h1>
@@ -120,7 +121,8 @@ function Signin() {
         <div className="container">
           <div
             className="text-center mx-auto mb-5 wow fadeInUp"
-            data-wow-delay="0.1s"
+            data-aos="flip-up"
+            data-aos-delay="500"
             style={{ width: "600px" }}
           >
             <h4 className="section-title">Welcome Back</h4>
@@ -146,6 +148,7 @@ function Signin() {
                           minLength={3}
                           maxLength={20}
                           required
+                          autoComplete="off"
                         />
                         <label for="name">Username</label>
                       </div>
@@ -160,6 +163,7 @@ function Signin() {
                           ref={password}
                           minLength={6}
                           required
+                          autoComplete="off"
                         />
                         <label for="subject">Password</label>
                       </div>
@@ -188,7 +192,7 @@ function Signin() {
             </div>
           ) : (
             <div className="row g-5 justify-content-center align-items-center">
-              <div className="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
+              <div className="col-lg-6 wow fadeInUp">
                 <form className="my-3" method="POST" onSubmit={updatePassClick}>
                   <div className="row g-3">
                     <div className="col-md-12">
@@ -202,6 +206,7 @@ function Signin() {
                           minLength={3}
                           maxLength={20}
                           required
+                          autoComplete="off"
                         />
                         <label for="name">Username</label>
                       </div>
@@ -216,6 +221,7 @@ function Signin() {
                           ref={oldpassword}
                           minLength={6}
                           required
+                          autoComplete="off"
                         />
                         <label for="subject">Current Password</label>
                       </div>
@@ -230,6 +236,7 @@ function Signin() {
                           ref={newpassword}
                           minLength={6}
                           required
+                          autoComplete="off"
                         />
                         <label for="subject">New Password</label>
                       </div>

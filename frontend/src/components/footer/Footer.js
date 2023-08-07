@@ -7,7 +7,8 @@ function Footer() {
       {/* Footer Start */}
       <div
         className="container-fluid bg-dark text-body footer mt-5 pt-5 px-0 wow fadeIn"
-        data-wow-delay="0.1s"
+        data-aos="flip-down"
+        data-aos-delay="500"
       >
         <div className="container py-5">
           <div className="row g-5">

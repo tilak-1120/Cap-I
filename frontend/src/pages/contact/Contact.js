@@ -39,7 +39,8 @@ function Contact() {
       {/* Page Header Start */}
       <div
         className="container-fluid page-header py-5 mb-5 wow fadeIn"
-        data-wow-delay="0.1s"
+        data-aos="fade-down"
+        data-aos-delay="500"
       >
         <div className="container py-5">
           <h1 className="display-1 text-white animated slideInDown">
@@ -74,7 +75,8 @@ function Contact() {
         <div className="container">
           <div
             className="text-center mx-auto mb-5 wow fadeInUp"
-            data-wow-delay="0.1s"
+            data-aos="flip-up"
+            data-aos-delay="500"
             style={{ width: "600px" }}
           >
             <h4 className="section-title">Contact Us</h4>
@@ -88,7 +90,8 @@ function Contact() {
               className={
                 usm ? "col-lg-6 wow fadeInUp" : "col-lg-12 wow fadeInUp"
               }
-              data-wow-delay="0.1s"
+              data-aos="flip-right"
+              data-aos-delay="500"
             >
               <div className="d-flex flex-column justify-content-center align-items-center h-100">
                 <div className="bg-light d-flex align-items-center w-100 p-4 mb-4">
@@ -133,7 +136,11 @@ function Contact() {
             </div>
             {usm ? (
               <>
-                <div className="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
+                <div
+                  className="col-lg-6 wow fadeInUp"
+                  data-aos="flip-left"
+                  data-aos-delay="500"
+                >
                   <form className="my-5" onSubmit={handleFormClick}>
                     <div className="row g-3">
                       <div className="col-12">
@@ -146,6 +153,7 @@ function Contact() {
                             ref={subject}
                             minLength={5}
                             maxLength={20}
+                            autoComplete="off"
                           />
                           <label for="subject">Subject</label>
                         </div>

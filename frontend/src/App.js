@@ -10,7 +10,10 @@ import Signin from "./pages/signin/Signin";
 import Signup from "./pages/signup/Signup";
 import Caption from "./pages/caption/Caption";
 import Footer from "./components/footer/Footer";
-import { createContext, useState } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
+
+import { createContext, useEffect, useState } from "react";
 
 // import "./lib/wow/wow.min.js";
 // import "./lib/easing/easing.min.js";
@@ -26,6 +29,9 @@ export const userContext = createContext();
 
 function App() {
   const [usm, setUsm] = useState("");
+  useEffect(() => {
+    AOS.init();
+  }, []);
 
   return (
     <>

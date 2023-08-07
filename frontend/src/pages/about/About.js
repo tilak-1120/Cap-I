@@ -24,7 +24,8 @@ function About() {
       {/* Page Header Start  */}
       <div
         className="container-fluid page-header py-5 mb-5 wow fadeIn"
-        data-wow-delay="0.1s"
+        data-aos="fade-down"
+        data-aos-delay="500"
       >
         <div className="container py-5">
           <h1 className="display-1 text-white animated slideInDown">
@@ -58,13 +59,21 @@ function About() {
       <div className="container-xxl py-5">
         <div className="container">
           <div className="row g-5">
-            <div className="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
+            <div
+              className="col-lg-6 wow fadeIn"
+              data-aos="flip-up"
+              data-aos-delay="500"
+            >
               <div className="about-img">
                 <img className="img-fluid" src="img/aboutus-1.jpg" alt="" />
                 <img className="img-fluid" src="img/aboutus-2.jpg" alt="" />
               </div>
             </div>
-            <div className="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
+            <div
+              className="col-lg-6 wow fadeIn"
+              data-aos="flip-up"
+              data-aos-delay="500"
+            >
               <h4 className="section-title">About Us</h4>
               <h1 className="display-5 mb-4">
                 A Creative Machine Learning Team Making Your Life Simple
@@ -105,7 +114,11 @@ function About() {
       <div className="container-xxl py-5">
         <div className="container">
           <div className="row g-5">
-            <div className="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+            <div
+              className="col-lg-6 wow fadeInUp"
+              data-aos="flip-left"
+              data-aos-delay="500"
+            >
               <h4 className="section-title">Who We Are!</h4>
               <h1 className="display-5 mb-4">
                 Why You Should Join Us? Learn More About Us!
@@ -116,7 +129,11 @@ function About() {
                 necessitatibus earum omnis blanditiis expedita laborum ipsam
                 nisi porro.
               </p>
-              <div className="row g-4">
+              <div
+                className="row g-4"
+                data-aos="flip-right"
+                data-aos-delay="500"
+              >
                 <div className="col-12">
                   <div className="d-flex align-items-start">
                     <img
@@ -167,7 +184,11 @@ function About() {
                 </div>
               </div>
             </div>
-            <div className="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
+            <div
+              className="col-lg-6 wow fadeInUp"
+              data-aos="fade-up"
+              data-aos-delay="500"
+            >
               <div className="feature-img">
                 <img className="img-fluid" src="img/aboutus-3.jpg" alt="" />
                 <img className="img-fluid" src="img/aboutus-4.jpg" alt="" />

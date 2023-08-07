@@ -93,7 +93,8 @@ function Caption() {
       {/* Page Header Start */}
       <div
         className="container-fluid page-header py-5 mb-5 wow fadeIn"
-        data-wow-delay="0.1s"
+        data-aos="fade-in"
+        data-aos-delay="500"
       >
         <div className="container py-5">
           <h1 className="display-1 text-white animated slideInDown">
@@ -127,7 +128,8 @@ function Caption() {
         <div className="container">
           <div
             className="text-center mx-auto mb-5 wow fadeInUp"
-            data-wow-delay="0.1s"
+            data-aos="fade-up"
+            data-aos-delay="500"
             style={{ width: "600px" }}
           >
             {isGenerated ? (
@@ -170,7 +172,8 @@ function Caption() {
 
                 <div
                   className="col-lg-12 wow fadeInUp d-flex flex-column-reverse"
-                  data-wow-delay="0.1s"
+                  data-aos="flip-up"
+                  data-aos-delay="500"
                 >
                   {recentImages.length >= 1
                     ? recentImages.map((key) => {
@@ -203,12 +206,20 @@ function Caption() {
               </>
             ) : (
               <>
-                <h4 className="section-title">Get A Caption For Your Image</h4>
-                <h1 className="display-5 mb-4">
-                  Just Upload A File <br />
-                  And You're Done!
-                </h1>
-                <div className="col-12 d-flex flex-row justify-content-around">
+                <div data-aos="flip-left" data-aos-delay="500">
+                  <h4 className="section-title">
+                    Get A Caption For Your Image
+                  </h4>
+                  <h1 className="display-5 mb-4">
+                    Just Upload A File <br />
+                    And You're Done!
+                  </h1>
+                </div>
+                <div
+                  className="col-12 d-flex flex-row justify-content-around"
+                  data-aos="fade-up"
+                  data-aos-delay="500"
+                >
                   <input
                     className="inputTag w-50 p-3"
                     type="file"
