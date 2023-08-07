@@ -26,10 +26,18 @@ const UserSchema = new mongoose.Schema(
       required: true,
       min: 6,
     },
-    captionedImages: {
-      type: Array,
-      default: [],
-    },
+    captionedImages: [
+      {
+        path: {
+          type: String,
+          default: "",
+        },
+        caption: {
+          type: String,
+          default: "",
+        },
+      },
+    ],
   },
   { timestamps: true }
 );

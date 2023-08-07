@@ -1,8 +1,39 @@
-import React from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import "./contact.css";
 import { Link } from "react-router-dom";
+import { userContext } from "../../App";
+import axios from "axios";
 
 function Contact() {
+  const { usm } = useContext(userContext);
+  const subject = useRef();
+  const message = useRef();
+
+  const submitFeedback = async () => {
+    try {
+      const submitFeedback = await axios.post("/api/v1/feedback", {
+        username: usm,
+        subject: subject.current.value,
+        message: message.current.value,
+      });
+
+      if (submitFeedback) {
+        alert("Feedback Submitted");
+        subject.current.value = "";
+        message.current.value = "";
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleFormClick = (e) => {
+    e.preventDefault();
+    submitFeedback();
+  };
+
+  useEffect(() => {}, [usm]);
+
   return (
     <>
       {/* Page Header Start */}
@@ -53,8 +84,13 @@ function Contact() {
             </h1>
           </div>
           <div className="row g-5">
-            <div className="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
-              <div className="d-flex flex-column justify-content-between h-100">
+            <div
+              className={
+                usm ? "col-lg-6 wow fadeInUp" : "col-lg-12 wow fadeInUp"
+              }
+              data-wow-delay="0.1s"
+            >
+              <div className="d-flex flex-column justify-content-center align-items-center h-100">
                 <div className="bg-light d-flex align-items-center w-100 p-4 mb-4">
                   <div
                     className="d-flex flex-shrink-0 align-items-center justify-content-center bg-dark"
@@ -95,64 +131,54 @@ function Contact() {
                 </div>
               </div>
             </div>
-            <div className="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
-              <form className="my-1">
-                <div className="row g-3">
-                  <div className="col-md-6">
-                    <div className="form-floating">
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="name"
-                        placeholder="Your Name"
-                      />
-                      <label for="name">Your Name</label>
+            {usm ? (
+              <>
+                <div className="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
+                  <form className="my-5" onSubmit={handleFormClick}>
+                    <div className="row g-3">
+                      <div className="col-12">
+                        <div className="form-floating">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="subject"
+                            placeholder="Subject"
+                            ref={subject}
+                            minLength={5}
+                            maxLength={20}
+                          />
+                          <label for="subject">Subject</label>
+                        </div>
+                      </div>
+                      <div className="col-12">
+                        <div className="form-floating">
+                          <textarea
+                            className="form-control"
+                            placeholder="Leave a message here"
+                            id="message"
+                            style={{ height: "150px" }}
+                            ref={message}
+                            minLength={10}
+                            maxLength={50}
+                          ></textarea>
+                          <label for="message">Message</label>
+                        </div>
+                      </div>
+                      <div className="col-12">
+                        <button
+                          className="btn btn-primary w-100 py-3"
+                          type="submit"
+                        >
+                          Send Message
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                  <div className="col-md-6">
-                    <div className="form-floating">
-                      <input
-                        type="email"
-                        className="form-control"
-                        id="email"
-                        placeholder="Your Email"
-                      />
-                      <label for="email">Your Email</label>
-                    </div>
-                  </div>
-                  <div className="col-12">
-                    <div className="form-floating">
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="subject"
-                        placeholder="Subject"
-                      />
-                      <label for="subject">Subject</label>
-                    </div>
-                  </div>
-                  <div className="col-12">
-                    <div className="form-floating">
-                      <textarea
-                        className="form-control"
-                        placeholder="Leave a message here"
-                        id="message"
-                        style={{ height: "150px" }}
-                      ></textarea>
-                      <label for="message">Message</label>
-                    </div>
-                  </div>
-                  <div className="col-12">
-                    <button
-                      className="btn btn-primary w-100 py-3"
-                      type="submit"
-                    >
-                      Send Message
-                    </button>
-                  </div>
+                  </form>
                 </div>
-              </form>
-            </div>
+              </>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </div>

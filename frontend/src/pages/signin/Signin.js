@@ -44,7 +44,8 @@ function Signin() {
       );
 
       if (updatePass) {
-        console.log(updatePass);
+        // console.log(updatePass);
+        alert("Password Updated");
         newusername.current.value = "";
         oldpassword.current.value = "";
         newpassword.current.value = "";
@@ -52,6 +53,9 @@ function Signin() {
       }
     } catch (err) {
       alert("Invalid Credentials");
+      newusername.current.value = "";
+      oldpassword.current.value = "";
+      newpassword.current.value = "";
       console.log(err);
     }
   };

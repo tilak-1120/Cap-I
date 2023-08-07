@@ -8,3 +8,31 @@
 .uploadedImg{
     width: 50%;
 }
+
+input[type=file]::file-selector-button{
+  margin-right: 10px;
+  height: 55px;
+  border: none;
+  background: #B78D65;
+  padding: 10px 20px;
+  border-radius: 15px;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 900;
+}
+
+.inputTag{
+    font-weight: bolder;
+}
+
+.submitBtn{
+    border: none;
+    margin-top: 16px;
+    background: #B78D65;
+    padding: 0px 40px;
+    border-radius: 15px;
+    color: #fff;
+    height: 55px;
+    cursor: pointer;
+    font-weight:900
+}

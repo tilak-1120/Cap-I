@@ -180,15 +180,19 @@ function Main() {
         <div className="container-xxl py-5">
           <div className="container">
             <div className="row g-5">
-              <div className="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
-                <h4 className="section-title">Review Us</h4>
+              <div className="col-lg-12 wow fadeInUp" data-wow-delay="0.1s">
+                <h4 className="section-title">Contact Us</h4>
                 <h1 className="display-5 mb-4">
                   Give it a call and we'll find the best way to improve
                 </h1>
                 <p className="mb-4">
                   Lorem ipsum dolor, sit amet consectetur adipisicing elit.
                   Alias eius magni ratione a debitis nostrum nemo, inventore
-                  nulla labore voluptas.
+                  nulla labore voluptas.Lorem ipsum dolor, sit amet consectetur
+                  adipisicing elit. Alias eius magni ratione a debitis nostrum
+                  nemo, inventore nulla labore voluptas.Lorem ipsum dolor, sit
+                  amet consectetur adipisicing elit. Alias eius magni ratione a
+                  debitis nostrum nemo, inventore nulla labore voluptas.
                 </p>
                 <div className="row g-4">
                   <div className="col-12">
@@ -221,7 +225,7 @@ function Main() {
                   </div>
                 </div>
               </div>
-              <div className="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
+              {/* <div className="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
                 <div className="row g-3">
                   <div className="col-12 col-sm-6">
                     <input
@@ -277,7 +281,7 @@ function Main() {
                     </button>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

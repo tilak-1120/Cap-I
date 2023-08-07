@@ -131,6 +131,9 @@ exports.userCheck = async (req, res) => {
 
 exports.uploadImage = async (req, res) => {
   try {
+    // console.log(req.file);
+    // console.log(req.body.caption);
+
     const { originalname, path } = req.file;
     const parts = originalname.split(".");
     const extention = parts[parts.length - 1];
@@ -142,11 +145,17 @@ exports.uploadImage = async (req, res) => {
     // console.log(newpath);
     // console.log(path);
 
+    const data = { path: newpath, caption: req.body.caption };
+
     const uploadImage = await User.updateOne(
       { username: req.body.username },
-      {
-        $push: { captionedImages: newpath },
-      }
+      // {
+      //   captionedImages: [
+      //     { $push: { path: newpath } },
+      //     { $push: { caption: req.body.caption } },
+      //   ],
+      // }
+      { $push: { captionedImages: data } }
     );
 
     if (uploadImage) {

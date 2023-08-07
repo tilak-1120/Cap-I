@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "./caption.css";
-// import { format } from "timeago.js";
 
 function Caption() {
   const { usm } = useContext(userContext);
@@ -13,13 +12,17 @@ function Caption() {
   const [isGenerated, setIsGenerated] = useState(false);
   const [images, setImages] = useState();
   const [recentImages, setRecentImages] = useState([]);
-  const [lastSeen, setLastSeen] = useState();
 
   const uploadImage = async () => {
     try {
+      const caption = "A girl";
       const formdata = new FormData();
       formdata.append("photo", files);
       formdata.append("username", usm);
+      formdata.append("caption", caption);
+
+      // console.log(formdata);
+      // console.log(caption);
 
       const newImage = await axios.post("/api/v1/upload", formdata);
 
@@ -44,7 +47,7 @@ function Caption() {
       if (getUser) {
         let uploadedImage =
           getUser.data.captionedImages[getUser.data.captionedImages.length - 1];
-        console.log(uploadedImage);
+        // console.log(uploadedImage);
         setImages(uploadedImage);
 
         let lastImages = getUser.data.captionedImages.filter((val, indx) => {
@@ -54,9 +57,8 @@ function Caption() {
             return val;
           }
         });
-        console.log(lastImages);
+        // console.log(lastImages);
         setRecentImages(lastImages);
-        setLastSeen(getUser.data.updatedAt);
       }
     } catch (err) {
       console.log(err);
@@ -83,7 +85,7 @@ function Caption() {
 
   useEffect(() => {
     getImages();
-    console.log(images);
+    // console.log(images);
   }, [isGenerated]);
 
   return (
@@ -120,7 +122,7 @@ function Caption() {
         </div>
       </div>
       {/* Page Header End */}
-      {/* Contact Start  */}
+      {/* Caption Start  */}
       <div className="container-xxl py-5">
         <div className="container">
           <div
@@ -137,7 +139,7 @@ function Caption() {
                 </h1>
 
                 <img
-                  src={images}
+                  src={images.path}
                   alt="Uploaded image"
                   className="uploadedImg m-5 mx-auto"
                 />
@@ -145,7 +147,7 @@ function Caption() {
                   <div className="captionDiv d-flex justify-content-center align-items-center w-100 mb-4">
                     <div className="ms-0">
                       <p className="mb-2">Your Caption</p>
-                      <h3 className="mb-1">Generating Caption.........</h3>
+                      <h3 className="mb-1">{images.caption}</h3>
                     </div>
                   </div>
                 </div>
@@ -174,12 +176,24 @@ function Caption() {
                     ? recentImages.map((key) => {
                         return (
                           <>
-                            <div className="d-flex justify-content-center align-items-center w-100">
-                              <img
-                                src={key}
-                                alt="Uploaded image"
-                                className="uploadedImg m-5 mx-auto"
-                              />
+                            <div>
+                              <div className="d-flex justify-content-center align-items-center w-100">
+                                <img
+                                  src={key.path}
+                                  alt="Uploaded image"
+                                  className="uploadedImg m-5 mx-auto"
+                                />
+                              </div>
+                              <div
+                                className="col-lg-12 wow fadeInUp"
+                                data-wow-delay="0.1s"
+                              >
+                                <div className="captionDiv d-flex justify-content-center align-items-center w-100 mb-4">
+                                  <div className="ms-0">
+                                    <h3 className="mb-1">{key.caption}</h3>
+                                  </div>
+                                </div>
+                              </div>
                             </div>
                           </>
                         );
@@ -196,7 +210,7 @@ function Caption() {
                 </h1>
                 <div className="col-12 d-flex flex-row justify-content-around">
                   <input
-                    className="btn btn-primary w-50 p-3"
+                    className="inputTag w-50 p-3"
                     type="file"
                     accept="image/png, image/jpg, image/jpeg"
                     placeholder="Choose Image"
@@ -205,10 +219,7 @@ function Caption() {
                       setFiles(e.target.files[0]);
                     }}
                   />
-                  <button
-                    className="btn btn-primary w-25 p-3"
-                    onClick={handleSubmitClick}
-                  >
+                  <button className="submitBtn" onClick={handleSubmitClick}>
                     Submit
                   </button>
                 </div>
@@ -217,7 +228,7 @@ function Caption() {
           </div>
         </div>
       </div>
-      {/* Contact End  */}
+      {/* Caption End  */}
     </>
   );
 }
