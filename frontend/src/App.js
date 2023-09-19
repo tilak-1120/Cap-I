@@ -1,4 +1,5 @@
 import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./bootstrap.scss";
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -9,21 +10,12 @@ import Contact from "./pages/contact/Contact";
 import Signin from "./pages/signin/Signin";
 import Signup from "./pages/signup/Signup";
 import Caption from "./pages/caption/Caption";
+import Archive from "./pages/archive/Archive";
 import Footer from "./components/footer/Footer";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
 import { createContext, useEffect, useState } from "react";
-
-// import "./lib/wow/wow.min.js";
-// import "./lib/easing/easing.min.js";
-// import "./lib/waypoints/waypoints.min.js";
-// import "./lib/counterup/counterup.min.js";
-// import "./lib/owlcarousel/owl.carousel.min.js";
-// import "./lib/tempusdominus/js/moment.min.js";
-// import "./lib/tempusdominus/js/moment-timezone.min.js";
-// import "./lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js";
-// import "./lib/main.js";
 
 export const userContext = createContext();
 
@@ -45,6 +37,7 @@ function App() {
             <Route exact path="/signin" element={<Signin />} />
             <Route exact path="/signup" element={<Signup />} />
             <Route exact path="/caption" element={<Caption />} />
+            <Route exact path="/archive" element={<Archive />} />
           </Routes>
           <Footer />
         </BrowserRouter>

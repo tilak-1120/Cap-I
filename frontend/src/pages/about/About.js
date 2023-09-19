@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./about.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { userContext } from "../../App";
 
 function About() {
   const [users, setUsers] = useState();
+  const { usm } = useContext(userContext);
 
   const getAllUsers = async () => {
     try {
@@ -18,6 +20,8 @@ function About() {
   useEffect(() => {
     getAllUsers();
   }, []);
+
+  useEffect(() => {}, [usm]);
 
   return (
     <>

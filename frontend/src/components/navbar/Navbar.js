@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { userContext } from "../../App";
-// import "./navbar.css";
+import "./navbar.css";
 
 function Navbar() {
   const { usm, setUsm } = useContext(userContext);
@@ -49,6 +49,9 @@ function Navbar() {
               <>
                 <Link to="/caption" className="nav-item nav-link">
                   Caption
+                </Link>
+                <Link to="/archive" className="nav-item nav-link">
+                  Archive
                 </Link>
                 <div
                   to="/signup"

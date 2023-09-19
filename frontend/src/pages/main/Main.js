@@ -22,6 +22,8 @@ function Main() {
     getAllUsers();
   }, []);
 
+  useEffect(() => {}, [usm]);
+
   return (
     <>
       {/* Carousel Start  */}
@@ -220,7 +222,7 @@ function Main() {
                     </div>
                     <div className="ms-4">
                       <p className="mb-2">Mail Us</p>
-                      <h3 className="mb-0">capi@gmail.com</h3>
+                      <h3 className="mb-0">captionit@gmail.com</h3>
                     </div>
                   </div>
                 </div>

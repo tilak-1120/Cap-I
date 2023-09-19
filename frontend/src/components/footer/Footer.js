@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { userContext } from "../../App";
 
 function Footer() {
+  const { usm } = useContext(userContext);
+
+  useEffect(() => {}, [usm]);
+
   return (
     <>
       {/* Footer Start */}
@@ -24,7 +29,7 @@ function Footer() {
               </p>
               <p className="mb-2">
                 <i className="fa fa-envelope text-primary me-3"></i>
-                capi@gmail.com
+                captionit@gmail.com
               </p>
             </div>
             <div className="col-lg-3 col-md-6">
@@ -35,9 +40,20 @@ function Footer() {
               <Link to="/contact" className="btn btn-link">
                 Contact Us
               </Link>
-              <Link to="/signup" className="btn btn-link">
-                Sign Up
-              </Link>
+              {usm == "" ? (
+                <Link to="/signup" className="btn btn-link">
+                  Sign Up
+                </Link>
+              ) : (
+                <>
+                  <Link to="/caption" className="btn btn-link">
+                    Caption
+                  </Link>
+                  <Link to="/archive" className="btn btn-link">
+                    Archive
+                  </Link>
+                </>
+              )}
             </div>
             <div className="col-lg-3 col-md-6">
               <div className="d-flex flex-column">

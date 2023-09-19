@@ -3,8 +3,6 @@ import "./signin.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { userContext } from "../../App";
-import Fadeup from "../../components/fadeup/Fadeup";
-import Fadein from "../../components/fadein/Fadein";
 
 function Signin() {
   const username = useRef();
@@ -248,6 +246,16 @@ function Signin() {
                       >
                         Update Password
                       </button>
+                    </div>
+                    <div className="col-12 d-flex justify-content-center align-items-center">
+                      <h4
+                        className="updateLink section-title"
+                        onClick={() => {
+                          setIsPassChange(false);
+                        }}
+                      >
+                        Sign In
+                      </h4>
                     </div>
                   </div>
                 </form>
