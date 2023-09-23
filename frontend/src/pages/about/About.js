@@ -3,10 +3,12 @@ import "./about.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { userContext } from "../../App";
+import { useCookies } from "react-cookie";
 
 function About() {
   const [users, setUsers] = useState();
   const { usm } = useContext(userContext);
+  const [cookie] = useCookies(["UserAuth"]);
 
   const getAllUsers = async () => {
     try {
@@ -21,7 +23,7 @@ function About() {
     getAllUsers();
   }, []);
 
-  useEffect(() => {}, [usm]);
+  useEffect(() => {}, [usm, cookie]);
 
   return (
     <>

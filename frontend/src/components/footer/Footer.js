@@ -1,9 +1,11 @@
 import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { userContext } from "../../App";
+import { useCookies } from "react-cookie";
 
 function Footer() {
   const { usm } = useContext(userContext);
+  const [cookie] = useCookies(["UserAuth"]);
 
   useEffect(() => {}, [usm]);
 
@@ -40,7 +42,7 @@ function Footer() {
               <Link to="/contact" className="btn btn-link">
                 Contact Us
               </Link>
-              {usm == "" ? (
+              {cookie.UserAuth && usm == "" ? (
                 <Link to="/signup" className="btn btn-link">
                   Sign Up
                 </Link>

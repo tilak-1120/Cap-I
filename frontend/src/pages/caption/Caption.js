@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "./caption.css";
+import { useCookies } from "react-cookie";
 
 function Caption() {
   const { usm } = useContext(userContext);
@@ -12,6 +13,7 @@ function Caption() {
   const [isGenerated, setIsGenerated] = useState(false);
   const [images, setImages] = useState();
   const [recentImages, setRecentImages] = useState([]);
+  const [cookie] = useCookies(["UserAuth"]);
 
   const uploadImage = async () => {
     try {
@@ -87,16 +89,16 @@ function Caption() {
   };
 
   useEffect(() => {
-    if (usm === "") {
+    if (cookie.UserAuth && usm === "") {
       navigate("/");
     }
   }, []);
 
   useEffect(() => {
-    if (usm === "") {
+    if (cookie.UserAuth && usm === "") {
       navigate("/");
     }
-  }, [usm]);
+  }, [usm, cookie]);
 
   useEffect(() => {
     getImages();

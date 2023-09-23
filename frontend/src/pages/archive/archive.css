@@ -60,10 +60,14 @@
   }
   
   .products__single {
-    height: 250px;
+    height: 450px;
     list-style: none;
-    padding: 20px;
-    background-color: rgb(220, 220, 220);
+    padding: 40px;
+    /* background-color: rgb(220, 220, 220); */
+    background-color: #e1c5ac;
+    color: #252525;
+    font-weight: 500;
+    font-size: 15px;
     text-align: center;
     border-radius: 5px;
     cursor: pointer; /* Imp on clickables */
@@ -71,9 +75,13 @@
   
   .products__single > img{
     width: 100%;
-    height: 95%;
+    height: 70%;
     object-fit: contain;
-    margin-bottom: 3px;
+    margin-bottom: 5px;
+  }
+
+  .products__single > span{
+    margin-top: 10px;
   }
   
   .pagination {
@@ -85,7 +93,9 @@
   
   .pagination > span{
     padding: 15px 20px;
-    border: 1px solid gray;
+    font-weight: 600;
+    /* border: 1px solid gray; */
+    /* border: 1px solid #B78D65; */
     cursor: pointer;
   }
   
@@ -94,5 +104,6 @@
   }
   
   .pagination__selected{
-    background-color: rgb(220, 220, 220);
+    background-color: #B78D65;
+    color: white;
   }

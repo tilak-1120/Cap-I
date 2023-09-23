@@ -1,6 +1,7 @@
 const User = require("../models/userSchema");
 const bcrypt = require("bcrypt");
 const fs = require("fs");
+const jwt = require("jsonwebtoken");
 
 exports.registerUser = async (req, res) => {
   try {
@@ -107,9 +108,21 @@ exports.userSignIn = async (req, res) => {
       findUser.password
     );
 
-    passwordCheck
-      ? res.status(200).json("Signed In Successfully")
-      : res.status(404).json("Invalid Credentials");
+    if (passwordCheck) {
+      const token = await jwt.sign(
+        { name: findUser.name },
+        process.env.SECRET_KEY
+      );
+
+      res.cookie("SignInAuth", token, {
+        expires: new Date(Date.now() + 1800000),
+        httpOnly: true,
+      });
+
+      res.status(200).json("Signed In Successfully");
+    } else {
+      res.status(404).json("Invalid Credentials");
+    }
   } catch (err) {
     res.status(500).json(err);
   }

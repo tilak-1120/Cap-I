@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { userContext } from "../../App";
 import axios from "axios";
 import "./archive.css";
+import { useCookies } from "react-cookie";
 // import Carousel from "react-bootstrap/Carousel";
 // import { MDBCarousel, MDBCarouselItem } from "mdb-react-ui-kit";
 
@@ -10,6 +11,7 @@ function Archive() {
   const { usm } = useContext(userContext);
   const [recentImages, setRecentImages] = useState([]);
   const navigate = useNavigate();
+  const [cookie] = useCookies(["UserAuth"]);
 
   const [page, setPage] = useState(1);
   const [isDivisible, setIsDivisible] = useState(false);
@@ -39,17 +41,17 @@ function Archive() {
   };
 
   useEffect(() => {
-    if (usm === "") {
+    if (cookie.UserAuth && usm === "") {
       navigate("/");
     }
     getImages();
   }, []);
 
   useEffect(() => {
-    if (usm === "") {
+    if (cookie.UserAuth && usm === "") {
       navigate("/");
     }
-  }, [usm, navigate]);
+  }, [usm, navigate, cookie]);
 
   return (
     <>
@@ -87,100 +89,125 @@ function Archive() {
         </div>
       </div>
 
-      <div>
-        {recentImages.length > 0 && isDivisible === true ? (
-          <div className="products">
-            {recentImages.slice(page * 10 - 10, page * 10).map((key, index) => {
-              return (
-                <span className="products__single" key={index}>
-                  <img src={key.path} alt="Page Image" />
-                  <span>{key.caption}</span>
-                </span>
-              );
-            })}
+      {recentImages.length === 0 ? (
+        <>
+          <div className="container-xxl py-5">
+            <div className="container">
+              <div
+                className="text-center mx-auto mb-5 wow fadeInUp"
+                data-aos="fade-up"
+                data-aos-delay="500"
+                style={{ width: "600px" }}
+              >
+                <h4 className="section-title">Caption Your Image Now</h4>
+                <h1 className="display-5 mb-4">
+                  To View Your Own <br />
+                  Personalised Archive!!
+                </h1>
+              </div>
+            </div>
           </div>
-        ) : (
-          <div className="products">
-            {recentImages
-              .slice(
-                page * len - len,
-                page * 10 > recentImages.length
-                  ? recentImages.length
-                  : page * 10
-              )
-              .map((key, index) => {
-                return (
-                  <span className="products__single" key={index}>
-                    <img src={key.path} alt="Page Image" />
-                    <span>{key.caption}</span>
-                  </span>
-                );
-              })}
-          </div>
-        )}
+        </>
+      ) : (
+        <>
+          <div>
+            {recentImages.length > 0 && isDivisible === true ? (
+              <div className="products">
+                {recentImages
+                  .slice(page * 10 - 10, page * 10)
+                  .map((key, index) => {
+                    return (
+                      <span className="products__single" key={index}>
+                        <img src={key.path} alt="Page Image" />
+                        <span>{key.caption}</span>
+                      </span>
+                    );
+                  })}
+              </div>
+            ) : (
+              <div className="products">
+                {recentImages
+                  .slice(
+                    page * len - len,
+                    page * 10 > recentImages.length
+                      ? recentImages.length
+                      : page * 10
+                  )
+                  .map((key, index) => {
+                    return (
+                      <span className="products__single" key={index}>
+                        <img src={key.path} alt="Page Image" />
+                        <span>{key.caption}</span>
+                      </span>
+                    );
+                  })}
+              </div>
+            )}
 
-        {recentImages.length > 0 && isDivisible === true ? (
-          <div className="pagination">
-            <span
-              onClick={() => selectPageHandler(page - 1)}
-              className={page > 1 ? "" : "pagination__disable"}
-            >
-              ◀
-            </span>
-
-            {[...Array(recentImages.length / 10)].map((_, i) => {
-              return (
+            {recentImages.length > 0 && isDivisible === true ? (
+              <div className="pagination">
                 <span
-                  key={i}
-                  className={page === i + 1 ? "pagination__selected" : ""}
-                  onClick={() => selectPageHandler(i + 1)}
+                  onClick={() => selectPageHandler(page - 1)}
+                  className={page > 1 ? "" : "pagination__disable"}
                 >
-                  {i + 1}
+                  ◀
                 </span>
-              );
-            })}
 
-            <span
-              onClick={() => selectPageHandler(page + 1)}
-              className={
-                page < recentImages.length / 10 ? "" : "pagination__disable"
-              }
-            >
-              ▶
-            </span>
-          </div>
-        ) : (
-          <div className="pagination">
-            <span
-              onClick={() => selectPageHandler(page - 1)}
-              className={page > 1 ? "" : "pagination__disable"}
-            >
-              ◀
-            </span>
+                {[...Array(recentImages.length / 10)].map((_, i) => {
+                  return (
+                    <span
+                      key={i}
+                      className={page === i + 1 ? "pagination__selected" : ""}
+                      onClick={() => selectPageHandler(i + 1)}
+                    >
+                      {i + 1}
+                    </span>
+                  );
+                })}
 
-            {[...Array(len)].map((_, i) => {
-              return (
                 <span
-                  key={i}
-                  className={page === i + 1 ? "pagination__selected" : ""}
-                  onClick={() => selectPageHandler(i + 1)}
+                  onClick={() => selectPageHandler(page + 1)}
+                  className={
+                    page < recentImages.length / 10 ? "" : "pagination__disable"
+                  }
                 >
-                  {i + 1}
+                  ▶
                 </span>
-              );
-            })}
+              </div>
+            ) : (
+              <div className="pagination">
+                <span
+                  onClick={() => selectPageHandler(page - 1)}
+                  className={page > 1 ? "" : "pagination__disable"}
+                >
+                  ◀
+                </span>
 
-            <span
-              onClick={() => selectPageHandler(page + 1)}
-              className={
-                page < recentImages.length / 10 ? "" : "pagination__disable"
-              }
-            >
-              ▶
-            </span>
+                {[...Array(len)].map((_, i) => {
+                  return (
+                    <span
+                      key={i}
+                      className={page === i + 1 ? "pagination__selected" : ""}
+                      onClick={() => selectPageHandler(i + 1)}
+                    >
+                      {i + 1}
+                    </span>
+                  );
+                })}
+
+                <span
+                  onClick={() => selectPageHandler(page + 1)}
+                  className={
+                    page < recentImages.length / 10 ? "" : "pagination__disable"
+                  }
+                >
+                  ▶
+                </span>
+              </div>
+            )}
           </div>
-        )}
-      </div>
+        </>
+      )}
     </>
   );
 }

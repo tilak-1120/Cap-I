@@ -3,6 +3,7 @@ import "./signin.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { userContext } from "../../App";
+import { useCookies } from "react-cookie";
 
 function Signin() {
   const username = useRef();
@@ -14,6 +15,8 @@ function Signin() {
   const navigate = useNavigate();
   const [isPassChange, setIsPassChange] = useState(false);
 
+  const [cookie, setCookie] = useCookies(["UserAuth"]);
+
   const signInUser = async () => {
     try {
       const userSignIn = await axios.post("/api/v1/signin", {
@@ -22,6 +25,12 @@ function Signin() {
       });
 
       if (userSignIn) {
+        setCookie("UserAuth", username.current.value, {
+          expires: new Date(Date.now() + 1800000),
+        });
+
+        console.log(`Cookie Set ${cookie}`);
+
         setUsm(username.current.value);
         navigate("/");
       }
@@ -69,16 +78,16 @@ function Signin() {
   };
 
   useEffect(() => {
-    if (usm !== "") {
+    if (cookie.UserAuth && usm !== "") {
       navigate("/");
     }
   }, []);
 
   useEffect(() => {
-    if (usm !== "") {
+    if (cookie.UserAuth && usm !== "") {
       navigate("/");
     }
-  }, [usm, setUsm, navigate]);
+  }, [usm, setUsm, navigate, cookie]);
 
   return (
     <>
