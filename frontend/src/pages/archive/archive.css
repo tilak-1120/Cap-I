@@ -57,31 +57,58 @@
     display: grid;
     gap: 20px;
     grid-template-columns: 1fr 1fr 1fr;
+
   }
   
   .products__single {
-    height: 450px;
+    height: 650px;
     list-style: none;
     padding: 40px;
     /* background-color: rgb(220, 220, 220); */
-    background-color: #e1c5ac;
+    /* background-color: #e1c5ac; */
     color: #252525;
     font-weight: 500;
     font-size: 15px;
     text-align: center;
-    border-radius: 5px;
+    /* border: 5px solid #e1c5ac; */
+    border-radius: 70px;
+    /* box-shadow: 5px 5px 10px 2px #e1c5ac; */
     cursor: pointer; /* Imp on clickables */
+    transition: all ease-in-out 0.3s;
+  }
+
+  .products :hover{
+    box-shadow: -13px -13px 10px 2px #e1c5ac;
+    transform: scaleZ(3);
   }
   
   .products__single > img{
     width: 100%;
-    height: 70%;
+    height: 60%;
     object-fit: contain;
-    margin-bottom: 5px;
+    margin-bottom: 30px;
   }
 
   .products__single > span{
-    margin-top: 10px;
+    background-color: #fefefe;
+    height: 35%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    font-weight: 600;
+    box-shadow: 13px 13px 10px 2px #e1c5ac;
+    border-radius: 30px;
+    transition: all ease-in-out 0.3s;
+  }
+
+  .products__single > span:hover{
+    box-shadow: 7px 7px 10px 2px #e1c5ac;
+    transform: scale(1.05, 1.05);
+  }
+
+  .products__single > img:hover{
+    box-shadow: none;
   }
   
   .pagination {
