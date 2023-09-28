@@ -3,8 +3,8 @@ import "./signin.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { userContext } from "../../App";
-import Fadeup from "../../components/fadeup/Fadeup";
-import Fadein from "../../components/fadein/Fadein";
+// import Fadeup from "../../components/fadeup/Fadeup";
+// import Fadein from "../../components/fadein/Fadein";
 
 function Signin() {
   const username = useRef();

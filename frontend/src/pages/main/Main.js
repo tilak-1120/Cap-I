@@ -41,13 +41,10 @@ function Main() {
                 <div className="row justify-content-start">
                   <div className="col-10 col-lg-8">
                     <h1 className="display-1 text-white animated slideInDown">
-                      Accuracy is our main goal
+                      Welcome to Caption-it!!
                     </h1>
                     <p className="fs-5 fw-medium text-white mb-4 pb-3">
-                      Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                      Vitae, vero eum! Eveniet explicabo nulla consectetur optio
-                      cum illo, quaerat odio corporis dolore beatae impedit
-                      maiores, dolores tempore, quasi ab quo!
+                      Get started by registering youself and generate captions. Our goal is to provide accurate caption for images. 
                     </p>
                     <Link
                       to={usm ? "/caption" : "/signup"}
