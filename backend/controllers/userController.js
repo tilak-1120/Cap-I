@@ -129,42 +129,87 @@ exports.userCheck = async (req, res) => {
   }
 };
 
+// exports.uploadImage = async (req, res) => {
+//   try {
+//     // console.log(req.file);
+//     // console.log(req.body.caption);
+
+//     const { originalname, path } = req.file;
+//     const parts = originalname.split(".");
+//     const extention = parts[parts.length - 1];
+//     const newpath = path + "." + extention;
+//     fs.renameSync(path, newpath);
+
+//     // console.log(parts);
+//     // console.log(extention);
+//     // console.log(newpath);
+//     // console.log(path);
+
+//     const data = { path: newpath, caption: req.body.caption };
+
+//     const uploadImage = await User.updateOne(
+//       { username: req.body.username },
+//       // {
+//       //   captionedImages: [
+//       //     { $push: { path: newpath } },
+//       //     { $push: { caption: req.body.caption } },
+//       //   ],
+//       // }
+//       { $push: { captionedImages: data } }
+//     );
+
+//     if (uploadImage) {
+//       res.status(200).json("Image Successfully Uploaded");
+//     }
+//   } catch (err) {
+//     res.status(500).json("Image upload failed");
+//   }
+// };
+
+
+
+// THIS IS NEW CODE that connects our app.py to this endpoint of nodeJs, Checking is required!!!!!
+
 exports.uploadImage = async (req, res) => {
   try {
-    // console.log(req.file);
-    // console.log(req.body.caption);
-
     const { originalname, path } = req.file;
     const parts = originalname.split(".");
     const extention = parts[parts.length - 1];
     const newpath = path + "." + extention;
     fs.renameSync(path, newpath);
 
-    // console.log(parts);
-    // console.log(extention);
-    // console.log(newpath);
-    // console.log(path);
-
     const data = { path: newpath, caption: req.body.caption };
 
+    // Define the URL of your Flask app
+    const flaskAppURL = 'http://localhost:5000/upload';  // Replace with the actual URL if necessary
+
+    // Send the image to your Flask app
+    const formData = new FormData();
+    formData.append('image', fs.createReadStream(newpath));
+    const response = await axios.post(flaskAppURL, formData, {
+      headers: {
+        ...formData.getHeaders(), // Include proper headers for file upload
+      },
+    });
+
+    // Handle the response from your Flask app
+    const caption = response.data.caption;
+
+    // Update the user's document with the generated caption
     const uploadImage = await User.updateOne(
       { username: req.body.username },
-      // {
-      //   captionedImages: [
-      //     { $push: { path: newpath } },
-      //     { $push: { caption: req.body.caption } },
-      //   ],
-      // }
-      { $push: { captionedImages: data } }
+      { $push: { captionedImages: data, captions: caption } }
     );
 
     if (uploadImage) {
       res.status(200).json("Image Successfully Uploaded");
     }
   } catch (err) {
+    console.error(err);
     res.status(500).json("Image upload failed");
   }
 };
+
 
 exports.getUserDetails = async (req, res) => {
   try {
@@ -186,3 +231,4 @@ exports.getAllUsers = async (req, res) => {
     res.status(500).json("Database is empty");
   }
 };
+

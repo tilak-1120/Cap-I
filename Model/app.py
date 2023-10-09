@@ -57,7 +57,7 @@ def idx_to_word(integer, tokenizer):
 
 app = Flask(__name__)
 
-@app.route('/caption', methods=['GET','POST'])
+@app.route('/upload', methods=['GET','POST'])
 def get_caption():
     if 'image' not in request.files:
         return jsonify({'error': 'No image found'})
