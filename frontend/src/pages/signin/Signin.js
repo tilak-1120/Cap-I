@@ -3,12 +3,11 @@ import "./signin.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { userContext } from "../../App";
-<<<<<<< HEAD
 // import Fadeup from "../../components/fadeup/Fadeup";
 // import Fadein from "../../components/fadein/Fadein";
-=======
 import { useCookies } from "react-cookie";
->>>>>>> 2174a025c5360eaa764c5eec8e118d92e7b7844f
+// >>>>>>> 2174a025c5360eaa764c5eec8e118d92e7b7844f
+// >>>>>>> 2174a025c5360eaa764c5eec8e118d92e7b7844f
 
 function Signin() {
   const username = useRef();
