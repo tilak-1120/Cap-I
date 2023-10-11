@@ -128,7 +128,9 @@ function Archive() {
               <div className="products">
                 {recentImages
                   .slice(
-                    page * len - len,
+                    page * 10 > recentImages.length
+                      ? (page - 1) * 10
+                      : page * len - len,
                     page * 10 > recentImages.length
                       ? recentImages.length
                       : page * 10

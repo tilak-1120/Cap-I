@@ -17,14 +17,18 @@ function Caption() {
 
   const uploadImage = async () => {
     try {
-      const caption = "Dummy Caption";
+      // const caption = "Dummy Caption";
       const formdata = new FormData();
       formdata.append("photo", files);
       formdata.append("username", usm);
-      formdata.append("caption", caption);
 
       // console.log(formdata);
       // console.log(caption);
+      console.log(files);
+
+      const caption = await axios.post("http://localhost:5000/upload", files);
+      console.log(caption);
+      formdata.append("caption", caption);
 
       const newImage = await axios.post("/api/v1/upload", formdata);
 
