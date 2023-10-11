@@ -2,6 +2,7 @@ import os
 import pickle
 import numpy as np
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from PIL import Image
 from tensorflow.keras.applications.vgg16 import VGG16, preprocess_input
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
@@ -56,13 +57,18 @@ def idx_to_word(integer, tokenizer):
     return None
 
 app = Flask(__name__)
+CORS(app)
+# CORS(app, origins=["http://localhost:3000"])
+# CORS(app, resources={r"/upload/*": {"origins": "*"}})
+CORS(app, origins=["*"])
+
 
 @app.route('/upload', methods=['GET','POST'])
 def get_caption():
-    if 'image' not in request.files:
+    if 'name' not in request.files:
         return jsonify({'error': 'No image found'})
 
-    image_file = request.files['image']
+    image_file = request.files['name']
     image_path = os.path.join('./Images', image_file.filename)
     image_file.save(image_path)
 
@@ -74,7 +80,7 @@ def get_caption():
 
 if __name__ == '__main__':
     max_length = 35  # Use the same value you used during training
-    app.run(host='0.0.0.0', port=5000)  # Run the Flask app on port 5000
+    app.run(host='127.0.0.1', port=5000)  # Run the Flask app on port 5000
 
 # The API will listen on http://localhost:5000/caption and wait for POST requests containing images. 
 # The Node.js backend can make POST requests to this API endpoint to receive the image captions in response.

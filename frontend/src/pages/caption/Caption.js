@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "./caption.css";
+import { useCookies } from "react-cookie";
 
 function Caption() {
   const { usm } = useContext(userContext);
@@ -12,17 +13,22 @@ function Caption() {
   const [isGenerated, setIsGenerated] = useState(false);
   const [images, setImages] = useState();
   const [recentImages, setRecentImages] = useState([]);
+  const [cookie] = useCookies(["UserAuth"]);
 
   const uploadImage = async () => {
     try {
-      const caption = "A girl";
+      // const caption = "Dummy Caption";
       const formdata = new FormData();
       formdata.append("photo", files);
       formdata.append("username", usm);
-      formdata.append("caption", caption);
 
       // console.log(formdata);
       // console.log(caption);
+      console.log(files);
+
+      const caption = await axios.post("http://localhost:5000/upload", files);
+      console.log(caption);
+      formdata.append("caption", caption);
 
       const newImage = await axios.post("/api/v1/upload", formdata);
 
@@ -33,7 +39,7 @@ function Caption() {
       }
 
       setFiles("");
-      setIsGenerated(true);
+      // setIsGenerated(true);
     } catch (err) {
       alert("Please Select An Image");
       console.log(err);
@@ -45,10 +51,20 @@ function Caption() {
       const getUser = await axios.get("/api/v1/getuser/" + usm);
 
       if (getUser) {
-        let uploadedImage =
-          getUser.data.captionedImages[getUser.data.captionedImages.length - 1];
-        // console.log(uploadedImage);
-        setImages(uploadedImage);
+        // console.log(getUser);
+
+        if (getUser.data.captionedImages.length !== 0) {
+          let uploadedImage =
+            getUser.data.captionedImages[
+              getUser.data.captionedImages.length - 1
+            ];
+          // console.log(uploadedImage);
+          setImages(uploadedImage);
+        } else {
+          let uploadedImage = getUser.data.captionedImages[0];
+          // console.log(uploadedImage);
+          setImages(uploadedImage);
+        }
 
         let lastImages = getUser.data.captionedImages.filter((val, indx) => {
           if (getUser.data.captionedImages.length > 6) {
@@ -65,23 +81,28 @@ function Caption() {
     }
   };
 
+  const dataFunc = async () => {
+    await uploadImage();
+    await getImages();
+  };
+
   const handleSubmitClick = (e) => {
     e.preventDefault();
-    uploadImage();
-    getImages();
+    dataFunc();
+    setIsGenerated(true);
   };
 
   useEffect(() => {
-    if (usm === "") {
+    if (cookie.UserAuth && usm === "") {
       navigate("/");
     }
   }, []);
 
   useEffect(() => {
-    if (usm === "") {
+    if (cookie.UserAuth && usm === "") {
       navigate("/");
     }
-  }, [usm]);
+  }, [usm, cookie]);
 
   useEffect(() => {
     getImages();
@@ -162,7 +183,7 @@ function Caption() {
                   Generate another caption
                 </button>
 
-                <h4 className="section-title mt-5">
+                {/* <h4 className="section-title mt-5">
                   Your Recently Captioned Images
                 </h4>
                 <h1 className="display-5 mb-4">
@@ -175,7 +196,7 @@ function Caption() {
                   data-aos="flip-up"
                   data-aos-delay="500"
                 >
-                  {recentImages.length >= 1
+                  {recentImages.length >= 2
                     ? recentImages.map((key) => {
                         return (
                           <>
@@ -202,7 +223,7 @@ function Caption() {
                         );
                       })
                     : ""}
-                </div>
+                </div> */}
               </>
             ) : (
               <>
@@ -228,6 +249,7 @@ function Caption() {
                     name="image"
                     onChange={(e) => {
                       setFiles(e.target.files[0]);
+                      // handleChangeClick();
                     }}
                   />
                   <button className="submitBtn" onClick={handleSubmitClick}>

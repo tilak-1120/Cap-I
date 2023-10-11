@@ -3,6 +3,7 @@ import "./signup.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { userContext } from "../../App";
+import { useCookies } from "react-cookie";
 
 function Signup() {
   const username = useRef();
@@ -11,6 +12,7 @@ function Signup() {
   const cpassword = useRef();
   const { usm, setUsm } = useContext(userContext);
   const navigate = useNavigate();
+  const [cookie] = useCookies(["UserAuth"]);
 
   const registerUser = async () => {
     try {
@@ -50,16 +52,16 @@ function Signup() {
   };
 
   useEffect(() => {
-    if (usm !== "") {
+    if (cookie.UserAuth && usm !== "") {
       navigate("/");
     }
   }, []);
 
   useEffect(() => {
-    if (usm !== "") {
+    if (cookie.UserAuth && usm !== "") {
       navigate("/");
     }
-  }, [usm, setUsm, navigate, registerUser]);
+  }, [usm, setUsm, navigate, registerUser, cookie]);
 
   return (
     <>

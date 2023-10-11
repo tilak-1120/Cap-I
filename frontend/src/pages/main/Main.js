@@ -2,10 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { userContext } from "../../App";
 import axios from "axios";
+import { useCookies } from "react-cookie";
 
 function Main() {
-  const { usm } = useContext(userContext);
+  const { usm, setUsm } = useContext(userContext);
   const [users, setUsers] = useState();
+  const [cookie] = useCookies(["UserAuth"]);
 
   const getAllUsers = async () => {
     try {
@@ -18,9 +20,18 @@ function Main() {
     }
   };
 
+  const SignInAuth = () => {
+    if (cookie.UserAuth !== "") {
+      setUsm(cookie.UserAuth);
+    }
+  };
+
   useEffect(() => {
+    SignInAuth();
     getAllUsers();
   }, []);
+
+  useEffect(() => {}, [usm, cookie]);
 
   return (
     <>
@@ -47,7 +58,7 @@ function Main() {
                       Get started by registering youself and generate captions. Our goal is to provide accurate caption for images. 
                     </p>
                     <Link
-                      to={usm ? "/caption" : "/signup"}
+                      to={cookie.UserAuth && usm ? "/caption" : "/signup"}
                       className="btn btn-primary py-3 px-5 animated slideInLeft"
                     >
                       Get Started
@@ -217,7 +228,7 @@ function Main() {
                     </div>
                     <div className="ms-4">
                       <p className="mb-2">Mail Us</p>
-                      <h3 className="mb-0">capi@gmail.com</h3>
+                      <h3 className="mb-0">captionit@gmail.com</h3>
                     </div>
                   </div>
                 </div>

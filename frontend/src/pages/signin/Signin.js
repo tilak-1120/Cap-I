@@ -3,8 +3,12 @@ import "./signin.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { userContext } from "../../App";
+<<<<<<< HEAD
 // import Fadeup from "../../components/fadeup/Fadeup";
 // import Fadein from "../../components/fadein/Fadein";
+=======
+import { useCookies } from "react-cookie";
+>>>>>>> 2174a025c5360eaa764c5eec8e118d92e7b7844f
 
 function Signin() {
   const username = useRef();
@@ -16,6 +20,8 @@ function Signin() {
   const navigate = useNavigate();
   const [isPassChange, setIsPassChange] = useState(false);
 
+  const [cookie, setCookie] = useCookies(["UserAuth"]);
+
   const signInUser = async () => {
     try {
       const userSignIn = await axios.post("/api/v1/signin", {
@@ -24,6 +30,12 @@ function Signin() {
       });
 
       if (userSignIn) {
+        setCookie("UserAuth", username.current.value, {
+          expires: new Date(Date.now() + 1800000),
+        });
+
+        console.log(`Cookie Set ${cookie}`);
+
         setUsm(username.current.value);
         navigate("/");
       }
@@ -71,16 +83,16 @@ function Signin() {
   };
 
   useEffect(() => {
-    if (usm !== "") {
+    if (cookie.UserAuth && usm !== "") {
       navigate("/");
     }
   }, []);
 
   useEffect(() => {
-    if (usm !== "") {
+    if (cookie.UserAuth && usm !== "") {
       navigate("/");
     }
-  }, [usm, setUsm, navigate]);
+  }, [usm, setUsm, navigate, cookie]);
 
   return (
     <>
@@ -248,6 +260,16 @@ function Signin() {
                       >
                         Update Password
                       </button>
+                    </div>
+                    <div className="col-12 d-flex justify-content-center align-items-center">
+                      <h4
+                        className="updateLink section-title"
+                        onClick={() => {
+                          setIsPassChange(false);
+                        }}
+                      >
+                        Sign In
+                      </h4>
                     </div>
                   </div>
                 </form>

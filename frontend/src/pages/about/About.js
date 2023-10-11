@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./about.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { userContext } from "../../App";
+import { useCookies } from "react-cookie";
 
 function About() {
   const [users, setUsers] = useState();
+  const { usm } = useContext(userContext);
+  const [cookie] = useCookies(["UserAuth"]);
 
   const getAllUsers = async () => {
     try {
@@ -18,6 +22,8 @@ function About() {
   useEffect(() => {
     getAllUsers();
   }, []);
+
+  useEffect(() => {}, [usm, cookie]);
 
   return (
     <>

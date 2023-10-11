@@ -1,6 +1,7 @@
 const User = require("../models/userSchema");
 const bcrypt = require("bcrypt");
 const fs = require("fs");
+const jwt = require("jsonwebtoken");
 
 exports.registerUser = async (req, res) => {
   try {
@@ -107,9 +108,21 @@ exports.userSignIn = async (req, res) => {
       findUser.password
     );
 
-    passwordCheck
-      ? res.status(200).json("Signed In Successfully")
-      : res.status(404).json("Invalid Credentials");
+    if (passwordCheck) {
+      const token = await jwt.sign(
+        { name: findUser.name },
+        process.env.SECRET_KEY
+      );
+
+      res.cookie("SignInAuth", token, {
+        expires: new Date(Date.now() + 1800000),
+        httpOnly: true,
+      });
+
+      res.status(200).json("Signed In Successfully");
+    } else {
+      res.status(404).json("Invalid Credentials");
+    }
   } catch (err) {
     res.status(500).json(err);
   }
@@ -147,15 +160,36 @@ exports.uploadImage = async (req, res) => {
 
     const data = { path: newpath, caption: req.body.caption };
 
+    // const uploadImage = await User.updateOne(
+    //   { username: req.body.username },
+    //   // {
+    //   //   captionedImages: [
+    //   //     { $push: { path: newpath } },
+    //   //     { $push: { caption: req.body.caption } },
+    //   //   ],
+    //   // }
+    //   { $push: { captionedImages: data } }
+    // );
+
+    // Define the URL of your Flask app
+    const flaskAppURL = "http://localhost:5000/upload"; // Replace with the actual URL if necessary
+
+    // Send the image to your Flask app
+    const formData = new FormData();
+    formData.append("image", fs.createReadStream(newpath));
+    const response = await axios.post(flaskAppURL, formData, {
+      headers: {
+        ...formData.getHeaders(), // Include proper headers for file upload
+      },
+    });
+
+    // Handle the response from your Flask app
+    const caption = response.data.caption;
+
+    // Update the user's document with the generated caption
     const uploadImage = await User.updateOne(
       { username: req.body.username },
-      // {
-      //   captionedImages: [
-      //     { $push: { path: newpath } },
-      //     { $push: { caption: req.body.caption } },
-      //   ],
-      // }
-      { $push: { captionedImages: data } }
+      { $push: { captionedImages: data, captions: caption } }
     );
 
     if (uploadImage) {

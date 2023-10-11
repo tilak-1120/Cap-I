@@ -1,26 +1,39 @@
 import React, { useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { userContext } from "../../App";
-// import "./navbar.css";
+import "./navbar.css";
+import { useCookies } from "react-cookie";
 
 function Navbar() {
   const { usm, setUsm } = useContext(userContext);
+  const [cookie, setCookie, removeCookie] = useCookies(["UserAuth"]);
+  const navigate = useNavigate();
 
   const signOut = () => {
     const ans = window.confirm("Are You Sure You Want To Sign Out?");
     if (ans) {
+      console.log(`Cookie Removed ${cookie.UserAuth}`);
+      removeCookie("UserAuth", { path: "/" });
       setUsm("");
     }
   };
 
-  useEffect(() => {}, [usm]);
+  useEffect(() => {
+    if (cookie.UserAuth && usm === "") {
+      navigate("/");
+    }
+  }, []);
+
+  useEffect(() => {
+    navigate("/");
+  }, [usm, cookie]);
 
   return (
     <>
       <nav
         className="navbar navbar-expand-lg bg-white navbar-light sticky-top py-lg-0 px-lg-5 wow fadeIn"
-        data-aos="flip-up"
-        data-aos-delay="500"
+        // data-aos="flip-up"
+        // data-aos-delay="500"
       >
         <Link to="/" className="navbar-brand ms-4 ms-lg-0">
           <h1 className="text-primary m-0">CAPTION-IT</h1>
@@ -45,10 +58,13 @@ function Navbar() {
               Contact
             </Link>
 
-            {usm !== "" ? (
+            {cookie.UserAuth && usm !== "" ? (
               <>
                 <Link to="/caption" className="nav-item nav-link">
                   Caption
+                </Link>
+                <Link to="/archive" className="nav-item nav-link">
+                  Archive
                 </Link>
                 <div
                   to="/signup"

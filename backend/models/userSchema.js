@@ -30,11 +30,11 @@ const UserSchema = new mongoose.Schema(
       {
         path: {
           type: String,
-          default: "",
+          default: "../uploads/default.jpg",
         },
         caption: {
           type: String,
-          default: "",
+          default: "Dummy Caption",
         },
       },
     ],

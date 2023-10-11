@@ -3,11 +3,13 @@ import "./contact.css";
 import { Link } from "react-router-dom";
 import { userContext } from "../../App";
 import axios from "axios";
+import { useCookies } from "react-cookie";
 
 function Contact() {
   const { usm } = useContext(userContext);
   const subject = useRef();
   const message = useRef();
+  const [cookie] = useCookies(["UserAuth"]);
 
   const submitFeedback = async () => {
     try {
@@ -32,7 +34,7 @@ function Contact() {
     submitFeedback();
   };
 
-  useEffect(() => {}, [usm]);
+  useEffect(() => {}, [usm, cookie]);
 
   return (
     <>
@@ -88,7 +90,9 @@ function Contact() {
           <div className="row g-5">
             <div
               className={
-                usm ? "col-lg-6 wow fadeInUp" : "col-lg-12 wow fadeInUp"
+                cookie.UserAuth && usm
+                  ? "col-lg-6 wow fadeInUp"
+                  : "col-lg-12 wow fadeInUp"
               }
               data-aos="flip-right"
               data-aos-delay="500"
@@ -134,7 +138,7 @@ function Contact() {
                 </div>
               </div>
             </div>
-            {usm ? (
+            {cookie.UserAuth && usm ? (
               <>
                 <div
                   className="col-lg-6 wow fadeInUp"
