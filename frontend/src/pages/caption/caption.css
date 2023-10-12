@@ -36,3 +36,11 @@ input[type=file]::file-selector-button{
     cursor: pointer;
     font-weight:900
 }
+
+.genCap{
+    text-transform: capitalize;
+}
+
+.yrCap{
+    font-weight: 700;
+}

@@ -175,8 +175,8 @@ function Caption() {
                 <div className="col-lg-12 wow fadeInUp" data-wow-delay="0.1s">
                   <div className="captionDiv d-flex justify-content-center align-items-center w-100 mb-4">
                     <div className="ms-0">
-                      <p className="mb-2">Your Caption</p>
-                      <h3 className="mb-1">{images.caption}</h3>
+                      <p className="mb-2 yrCap">Your Caption</p>
+                      <h3 className="mb-1 genCap">{images.caption}</h3>
                     </div>
                   </div>
                 </div>

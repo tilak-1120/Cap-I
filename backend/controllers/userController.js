@@ -158,7 +158,8 @@ exports.uploadImage = async (req, res) => {
     // console.log(newpath);
     // console.log(path);
 
-    const data = { path: newpath, caption: req.body.caption };
+    const data = { path: newpath, caption: req.body.caption.slice(8, -6) };
+    console.log(req.body.caption.slice(8, -6));
 
     const uploadImage = await User.updateOne(
       { username: req.body.username },
