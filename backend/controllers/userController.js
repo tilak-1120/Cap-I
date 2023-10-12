@@ -160,37 +160,37 @@ exports.uploadImage = async (req, res) => {
 
     const data = { path: newpath, caption: req.body.caption };
 
-    // const uploadImage = await User.updateOne(
-    //   { username: req.body.username },
-    //   // {
-    //   //   captionedImages: [
-    //   //     { $push: { path: newpath } },
-    //   //     { $push: { caption: req.body.caption } },
-    //   //   ],
-    //   // }
-    //   { $push: { captionedImages: data } }
-    // );
-
-    // Define the URL of your Flask app
-    const flaskAppURL = "http://localhost:5000/upload"; // Replace with the actual URL if necessary
-
-    // Send the image to your Flask app
-    const formData = new FormData();
-    formData.append("image", fs.createReadStream(newpath));
-    const response = await axios.post(flaskAppURL, formData, {
-      headers: {
-        ...formData.getHeaders(), // Include proper headers for file upload
-      },
-    });
-
-    // Handle the response from your Flask app
-    const caption = response.data.caption;
-
-    // Update the user's document with the generated caption
     const uploadImage = await User.updateOne(
       { username: req.body.username },
-      { $push: { captionedImages: data, captions: caption } }
+      // {
+      //   captionedImages: [
+      //     { $push: { path: newpath } },
+      //     { $push: { caption: req.body.caption } },
+      //   ],
+      // }
+      { $push: { captionedImages: data } }
     );
+
+    // Define the URL of your Flask app
+    // const flaskAppURL = "http://localhost:5000/upload"; // Replace with the actual URL if necessary
+
+    // Send the image to your Flask app
+    // const formData = new FormData();
+    // formData.append("image", fs.createReadStream(newpath));
+    // const response = await axios.post(flaskAppURL, formData, {
+    //   headers: {
+    //     ...formData.getHeaders(), // Include proper headers for file upload
+    //   },
+    // });
+
+    // Handle the response from your Flask app
+    // const caption = response.data.caption;
+
+    // Update the user's document with the generated caption
+    // const uploadImage = await User.updateOne(
+    //   { username: req.body.username },
+    //   { $push: { captionedImages: data, captions: caption } }
+    // );
 
     if (uploadImage) {
       res.status(200).json("Image Successfully Uploaded");

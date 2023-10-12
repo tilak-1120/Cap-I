@@ -26,11 +26,17 @@ function Caption() {
       // console.log(caption);
       console.log(files);
 
-      const caption = await axios.post("http://localhost:5000/upload", files);
+      const caption = await axios.post(
+        "http://localhost:5000/upload",
+        formdata
+      );
       console.log(caption);
-      formdata.append("caption", caption);
+      formdata.append("caption", caption.data.caption);
 
-      const newImage = await axios.post("/api/v1/upload", formdata);
+      const newImage = await axios.post(
+        "http://localhost:8000/api/v1/upload",
+        formdata
+      );
 
       if (newImage) {
         // console.log(formdata);

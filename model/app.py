@@ -65,10 +65,10 @@ CORS(app, origins=["*"])
 
 @app.route('/upload', methods=['GET','POST'])
 def get_caption():
-    if 'name' not in request.files:
+    if 'photo' not in request.files:
         return jsonify({'error': 'No image found'})
 
-    image_file = request.files['name']
+    image_file = request.files['photo']
     image_path = os.path.join('./Images', image_file.filename)
     image_file.save(image_path)
 
